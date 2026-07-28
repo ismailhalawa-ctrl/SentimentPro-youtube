@@ -22,8 +22,7 @@ SentimentPRO helps content creators understand their audience without reading th
 ![History](screens/history.png)
 
 ### 🤖 AI Assistant (RAG Chat)
-![Ai Assistant](screens/al_assistant.png)
-
+![AI Assistant](screens/ai_assistant.png)
 ---
 
 ## ✨ Features
