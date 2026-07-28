@@ -22,6 +22,9 @@ htmlcov/
 node_modules/
 .next/
 out/
+dist/
+build/
+coverage/
 tsconfig.tsbuildinfo
 
 # Logs
@@ -34,6 +37,13 @@ uvicorn_debug.log
 # Local data / model artifacts
 chroma_data/
 onnx_models/
+
+# Databases / backups
+*.db
+*.sqlite
+*.sqlite3
+*.bak
+*.backup
 
 # Editor / OS
 .vscode/

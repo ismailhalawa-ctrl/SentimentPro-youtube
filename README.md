@@ -4,6 +4,7 @@
 
 SentimentPRO helps content creators understand their audience without reading thousands of comments manually. Paste a video URL and get a full sentiment breakdown, spam/sarcasm/language detection, AI-generated executive summaries, audience personas, complaint/suggestion mining, FAQs, topic clusters, an "audience health" score, and a RAG-based chat assistant to ask free-form questions about that video's comments — all through an interactive dashboard.
 
+[![CI](https://github.com/ismailhalawa-ctrl/SentimentPro-youtube/actions/workflows/ci.yml/badge.svg)](https://github.com/ismailhalawa-ctrl/SentimentPro-youtube/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 ---
@@ -15,13 +16,19 @@ SentimentPRO helps content creators understand their audience without reading th
 ### 🏠 Landing Page
 ![Landing Screen](screens/landing.png)
 
-### 📊 Analytics Dashboard
+### 📊 Dashboard
 ![Dashboard](screens/dashboard.png)
 
-### 💬 History & Reports
+### 📈 Reports & Analytics
+![Reports](screens/reports.png)
+
+### 📄 Per-Video Reports & Export
+![Export Reports](screens/export_reports.png)
+
+### 🕘 History
 ![History](screens/history.png)
 
-### 🤖 AI Assistant (RAG Chat)
+### 🤖 Channel Assistant (RAG Chat)
 ![AI Assistant](screens/ai_assistant.png)
 ---
 
@@ -162,7 +169,12 @@ This creates the full schema (users, analysis jobs, comment analyses/results, jo
 └── README.md
 ```
 
-See [DEPLOYMENT.md](DEPLOYMENT.md) for architecture notes, scaling considerations, and health checks.
+## 📚 Documentation
+
+- [ARCHITECTURE.md](ARCHITECTURE.md) — system design, the AI pipeline, database schema
+- [API.md](API.md) — REST API reference
+- [DEPLOYMENT.md](DEPLOYMENT.md) — production deployment, scaling, health checks
+- [CHANGELOG.md](CHANGELOG.md) — release history
 
 ---
 
