@@ -203,12 +203,12 @@ Released under the [MIT License](LICENSE) — free to use, modify, and distribut
 
 ## 👤 Author
 
-**Ismaeel Halawa**
+**Ismail Halawa**
 <!-- Add your name, title, portfolio site, LinkedIn, etc. here -->
 
 - GitHub: [@ismailhalawa-ctrl](https://github.com/ismailhalawa-ctrl)
-<!-- - LinkedIn: -->
-<!-- - Email:    -->
+<!-- - LinkedIn: https://www.linkedin.com/in/ismail-halawa-987aa52ab/ -->
+<!-- - Email:ismaeelhalawa2003@gmail.com    -->
 <!-- - Portfolio: -->
 
 ---
