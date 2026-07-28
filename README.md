@@ -31,14 +31,14 @@ SentimentPRO helps content creators understand their audience without reading th
 ### 🤖 Channel Assistant (RAG Chat)
 ![AI Assistant](screens/ai_assistant.png)
 
-### ⭐ Ai Insights
+### ⭐ AI Insights
 ![AI Insights](screens/ai_insights.png)
 
 ### 📖 Video Summary
 ![Video Summary](screens/summary.png)
 
 ### 🧠 Audience Intelligence 
-![Audience Intelligence](screens/audience_intelligence.png)
+![Audience Intelligence](screens/audiance_intelligence.png)
 
 ---
 
