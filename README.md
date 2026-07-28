@@ -207,7 +207,7 @@ Released under the [MIT License](LICENSE) — free to use, modify, and distribut
 
 - **GitHub :** [@ismailhalawa-ctrl](https://github.com/ismailhalawa-ctrl)
 - **LinkedIn :** [Ismail Halawa](https://www.linkedin.com/in/ismail-halawa-987aa52ab/)
-- **Email :** [ismaeelhalawa2003@gmail.com](mailto:ismaeelhalawa2003@gmail.com)
+- **Email :** [ismaeelhalawa2003@gmail.com](mailto:ismaeelhalawa20003@gmail.com)
 
 ---
 
