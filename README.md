@@ -1,4 +1,4 @@
-# 🎯 SentimentPRO — YouTube Comment Sentiment Analyzer
+# 🎯 SentimentPRO — YouTube Comment Sentiment Analyzer (Advanced)
 
 **AI-powered platform for analyzing YouTube comments using NLP and Transformer models.**
 
