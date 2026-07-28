@@ -139,7 +139,11 @@ jobs:
           --health-timeout 5s
           --health-retries 12
     env:
-      database_url: "mssql+pyodbc://sa:CI_Test_Str0ngP@ss!@localhost:1433/master?driver=ODBC+Driver+18+for+SQL+Server&TrustServerCertificate=yes"
+      # The @ in the password must be percent-encoded (%40) here — this is a
+      # SQLAlchemy connection URL, and an unescaped @ in the userinfo section
+      # gets misparsed as the user:password/host separator (the raw password,
+      # used as-is by sqlcmd/the container/ODBC DSNs elsewhere, is unaffected).
+      database_url: "mssql+pyodbc://sa:CI_Test_Str0ngP%40ss!@localhost:1433/master?driver=ODBC+Driver+18+for+SQL+Server&TrustServerCertificate=yes"
       jwt_secret_key: "ci-integration-test-secret-not-used-anywhere-real"
       environment: development
     steps:
@@ -332,7 +336,8 @@ jobs:
       - name: Run Docker smoke test
         run: bash scripts/docker-smoke-test.sh
         env:
-          SMOKE_TEST_DATABASE_URL: "mssql+pyodbc://sa:CI_Test_Str0ngP@ss!@localhost:1433/master?driver=ODBC+Driver+18+for+SQL+Server&TrustServerCertificate=yes"
+          # Same %40-encoding fix as the backend-tests job's database_url — see the comment there.
+          SMOKE_TEST_DATABASE_URL: "mssql+pyodbc://sa:CI_Test_Str0ngP%40ss!@localhost:1433/master?driver=ODBC+Driver+18+for+SQL+Server&TrustServerCertificate=yes"
 
   all-checks-passed:
     name: All checks passed
