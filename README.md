@@ -13,16 +13,16 @@ SentimentPRO helps content creators understand their audience without reading th
 <!-- Add screenshots to a docs/screenshots/ folder and update the paths below. -->
 
 ### 🏠 Landing Page
-![Landing Screen](docs/screenshots/landing.png)
+![Landing Screen](screens/landing.png)
 
 ### 📊 Analytics Dashboard
-![Dashboard](docs/screenshots/dashboard.png)
+![Dashboard](screens/dashboard.png)
 
 ### 💬 History & Reports
-![History](docs/screenshots/history.png)
+![History](screens/history.png)
 
 ### 🤖 AI Assistant (RAG Chat)
-![AI Assistant](docs/screenshots/ai_assistant.png)
+![AI Assistant](screens/ai_assistant.png)
 
 ---
 
