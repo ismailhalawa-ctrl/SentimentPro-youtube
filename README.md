@@ -204,12 +204,10 @@ Released under the [MIT License](LICENSE) — free to use, modify, and distribut
 ## 👤 Author
 
 **Ismail Halawa**
-<!-- Add your name, title, portfolio site, LinkedIn, etc. here -->
 
-- GitHub: [@ismailhalawa-ctrl](https://github.com/ismailhalawa-ctrl)
-- **LinkedIn:** [Ismail Halawa](https://www.linkedin.com/in/ismail-halawa-987aa52ab/)
-- **Email:** [ismaeelhalawa2003@gmail.com](mailto:ismaeelhalawa2003@gmail.com)
-<!-- - Portfolio: -->
+- **GitHub :** [@ismailhalawa-ctrl](https://github.com/ismailhalawa-ctrl)
+- **LinkedIn :** [Ismail Halawa](https://www.linkedin.com/in/ismail-halawa-987aa52ab/)
+- **Email :** [ismaeelhalawa2003@gmail.com](mailto:ismaeelhalawa2003@gmail.com)
 
 ---
 
