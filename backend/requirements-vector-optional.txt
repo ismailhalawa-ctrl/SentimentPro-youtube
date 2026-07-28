@@ -1,0 +1,8 @@
+# Optional vector-store providers — install only if you set
+# VECTOR_DB_PROVIDER=qdrant or VECTOR_DB_PROVIDER=pinecone in your .env.
+# Neither is imported at module load time (see app/ai/rag/qdrant_store.py,
+# pinecone_store.py) — a missing package here degrades that store's
+# is_configured() to False rather than crashing the app, so the default
+# chromadb-only install (see requirements.txt) never needs this file.
+qdrant-client==1.12.1
+pinecone-client==5.0.1

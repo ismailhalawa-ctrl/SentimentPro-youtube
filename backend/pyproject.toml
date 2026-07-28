@@ -1,0 +1,44 @@
+[tool.ruff]
+line-length = 110
+target-version = "py313"
+exclude = ["alembic/versions", "venv"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "C4", "SIM"]
+ignore = ["E501", "F821"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["app", "tests"]
+
+[tool.ruff.lint.per-file-ignores]
+"app/main.py" = ["F401"]
+"alembic/env.py" = ["F401"]
+
+[tool.ruff.lint.flake8-bugbear]
+extend-immutable-calls = [
+    "fastapi.Depends",
+    "fastapi.Query",
+    "fastapi.Path",
+    "fastapi.Body",
+    "fastapi.Cookie",
+    "fastapi.Header",
+    "fastapi.Form",
+    "fastapi.File",
+]
+
+[tool.mypy]
+python_version = "3.13"
+ignore_missing_imports = true
+exclude = ["alembic/versions/", "venv/", "tests/"]
+warn_unused_ignores = false
+warn_return_any = false
+check_untyped_defs = true
+plugins = ["pydantic.mypy"]
+
+[[tool.mypy.overrides]]
+module = "app.models.*"
+disable_error_code = ["name-defined"]
+
+[tool.bandit]
+exclude_dirs = ["venv", "tests", "alembic/versions"]
+skips = ["B101", "B105", "B106"]

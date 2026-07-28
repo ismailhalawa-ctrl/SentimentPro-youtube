@@ -1,0 +1,10 @@
+services:
+  backend:
+    environment:
+      database_url: mssql+pyodbc://sa:ProdVerify123!Strong@host.docker.internal:14330/master?driver=ODBC+Driver+18+for+SQL+Server&TrustServerCertificate=yes
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    deploy:
+      resources:
+        limits:
+          cpus: "12"

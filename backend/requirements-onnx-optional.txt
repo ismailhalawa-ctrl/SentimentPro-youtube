@@ -1,0 +1,12 @@
+# Optional accelerated FAST-mode inference — install only if you set
+# USE_ONNX_RUNTIME=true in your .env. Neither package is imported at
+# module load time (see app/ai/providers/model_loader.py's ONNX branch);
+# its absence with USE_ONNX_RUNTIME still true raises a clear
+# ImportError at startup telling you to install this file, rather than
+# silently falling back (a silent fallback here would be worse: you'd
+# think you were running the fast, quantized path and actually be back on
+# plain PyTorch with no signal that anything's different).
+#
+# onnxruntime itself is already a transitive dependency (via chromadb in
+# requirements.txt) and doesn't need to be listed again here.
+optimum[onnxruntime]==2.1.0

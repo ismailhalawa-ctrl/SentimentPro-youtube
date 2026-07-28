@@ -1,0 +1,10 @@
+venv/
+__pycache__/
+*.pyc
+.env
+.env.example
+.pytest_cache/
+tests/
+onnx_models/
+chroma_data/
+.git/

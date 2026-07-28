@@ -1,0 +1,55 @@
+# Environment / secrets
+.env
+.env.local
+.env.*.local
+*.env
+!.env.example
+!*.env.example
+
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Node
+node_modules/
+.next/
+out/
+tsconfig.tsbuildinfo
+
+# Logs
+*.log
+backend_stdout.log
+backend_stderr.log
+frontend_dev.log
+uvicorn_debug.log
+
+# Local data / model artifacts
+chroma_data/
+onnx_models/
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Certificates / keys
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+
+# AI assistant tooling (local dev notes, not part of the app)
+.claude/
+frontend/CLAUDE.md
+frontend/AGENTS.md
+PROJECT_OVERVIEW.md
