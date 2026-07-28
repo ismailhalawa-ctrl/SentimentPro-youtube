@@ -177,6 +177,40 @@ jobs:
             backend/onnx_models
           key: models-${{ hashFiles('backend/.env.example') }}
 
+      - name: Wait for SQL Server to accept ODBC logins
+        # The service container's own health check runs sqlcmd *inside* the
+        # container and can report healthy slightly before the server accepts
+        # new logins from *outside* under CI's constrained CPU/memory, which
+        # surfaces as a pyodbc "Login timeout expired" (HYT00) on the first
+        # real connection attempt. Retry an actual ODBC login (the same driver
+        # path the app uses) instead of trusting the container health check alone.
+        run: |
+          python -u - <<'PY'
+          import sys
+          import time
+
+          import pyodbc
+
+          conn_str = (
+              "DRIVER={ODBC Driver 18 for SQL Server};"
+              "SERVER=localhost,1433;UID=sa;PWD=CI_Test_Str0ngP@ss!;"
+              "TrustServerCertificate=yes;"
+          )
+
+          for attempt in range(1, 31):
+              try:
+                  pyodbc.connect(conn_str, timeout=5).close()
+                  print("SQL Server is accepting logins.")
+                  sys.exit(0)
+              except Exception as exc:
+                  print(f"Attempt {attempt}/30: not ready yet ({exc})")
+                  time.sleep(3)
+
+          print("SQL Server never became ready to accept logins.")
+          sys.exit(1)
+          PY
+        working-directory: backend
+
       - name: Run database migrations
         run: python -m alembic upgrade head
         working-directory: backend
