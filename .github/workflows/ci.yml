@@ -350,8 +350,13 @@ jobs:
         timeout-minutes: 8
         run: bash scripts/docker-smoke-test.sh
         env:
+          # host.docker.internal, NOT localhost: the backend here runs inside its own
+          # container (started by docker-smoke-test.sh, which already maps
+          # host.docker.internal -> host-gateway for exactly this reason), so "localhost"
+          # in this connection string would resolve to that container itself — not the
+          # sqlserver service container, which is published on the *runner's* localhost.
           # Same %40-encoding fix as the backend-tests job's database_url — see the comment there.
-          SMOKE_TEST_DATABASE_URL: "mssql+pyodbc://sa:CI_Test_Str0ngP%40ss!@localhost:1433/master?driver=ODBC+Driver+18+for+SQL+Server&TrustServerCertificate=yes"
+          SMOKE_TEST_DATABASE_URL: "mssql+pyodbc://sa:CI_Test_Str0ngP%40ss!@host.docker.internal:1433/master?driver=ODBC+Driver+18+for+SQL+Server&TrustServerCertificate=yes"
 
   all-checks-passed:
     name: All checks passed
