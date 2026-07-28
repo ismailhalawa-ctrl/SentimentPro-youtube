@@ -152,6 +152,12 @@ jobs:
 
       - name: Install ODBC Driver 18 for SQL Server
         run: |
+          # ubuntu-22.04 GitHub runners ship their own /etc/apt/sources.list.d/microsoft-prod.list
+          # (for the preinstalled .NET/PowerShell packages) pointing at the same
+          # packages.microsoft.com/ubuntu/22.04/prod source with a different Signed-By
+          # value than the one we're about to add, which makes apt refuse to update with
+          # "Conflicting values set for option Signed-By". Remove it first.
+          sudo rm -f /etc/apt/sources.list.d/microsoft-prod.list /etc/apt/sources.list.d/mssql-release.list
           curl -sSL https://packages.microsoft.com/keys/microsoft.asc | sudo tee /etc/apt/trusted.gpg.d/microsoft.asc
           curl -sSL https://packages.microsoft.com/config/ubuntu/22.04/prod.list | sudo tee /etc/apt/sources.list.d/mssql-release.list
           sudo apt-get update

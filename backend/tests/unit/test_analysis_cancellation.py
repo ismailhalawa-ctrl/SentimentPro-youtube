@@ -35,7 +35,10 @@ def test_cancellation_wakes_a_waiter_on_a_different_thread_promptly():
         svc._cancellation_loops.pop(job_id, None)
 
     assert result.get("elapsed") is not None, "cancel_event.wait() never woke up (cross-thread bug regressed)"
-    assert result["elapsed"] < 1.0, (
+    # Threshold is deliberately generous (not ~0.1s) because shared CI runners can
+    # have real scheduling delays under load; the regression this guards against
+    # is "never wakes up" (many seconds / timeout), not sub-second jitter.
+    assert result["elapsed"] < 3.0, (
         f"cancellation woke the waiter after {result['elapsed']:.2f}s, expected near-instant"
     )
 
