@@ -5,7 +5,7 @@
 SentimentPRO helps content creators understand their audience without reading thousands of comments manually. Paste a video URL and get a full sentiment breakdown, spam/sarcasm/language detection, AI-generated executive summaries, audience personas, complaint/suggestion mining, FAQs, topic clusters, an "audience health" score, and a RAG-based chat assistant to ask free-form questions about that video's comments — all through an interactive dashboard.
 
 [![CI](https://github.com/ismailhalawa-ctrl/SentimentPro-youtube/actions/workflows/ci.yml/badge.svg)](https://github.com/ismailhalawa-ctrl/SentimentPro-youtube/actions/workflows/ci.yml)
-[![License](https://img.shields.io/badge/license-All%20Rights%20Reserved-lightgrey.svg)](LICENSE)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 ---
 
@@ -197,7 +197,7 @@ CI runs lint (ruff/eslint), type checks (mypy/tsc), security scans (gitleaks, ba
 
 ## 📄 License
 
-All rights reserved — see [LICENSE](LICENSE). This source code is made available for viewing purposes only; no permission is granted to copy, modify, or distribute it without prior written consent.
+Released under the [MIT License](LICENSE) — free to use, modify, and distribute, with attribution.
 
 ---
 
