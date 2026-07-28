@@ -33,7 +33,7 @@ CONTEXTUAL_NUANCE = (
     "purely informational, asks a question, states a fact, or reflects on "
     "a topic without clearly praising or criticizing the video should be "
     "neutral, not forced into positive or negative.\n"
-    "- A comment can pair clear praise or gratitude (\"I love your videos\", "
+    '- A comment can pair clear praise or gratitude ("I love your videos", '
     '"thank you for this", "amazing content") with a single bounded request '
     "or aside about one specific element — e.g. asking the creator to "
     "remove background music for religious reasons, requesting a different "
@@ -42,7 +42,7 @@ CONTEXTUAL_NUANCE = (
     "more prominent part of the comment and the request is a secondary "
     "aside, the overall sentiment is positive (or neutral if the praise is "
     "mild) — do not let one bounded request flip the whole comment to "
-    "negative. Reserve \"negative\" for comments where dissatisfaction or "
+    'negative. Reserve "negative" for comments where dissatisfaction or '
     "criticism is the dominant, primary content, not an embedded aside "
     "inside otherwise-supportive text."
 )

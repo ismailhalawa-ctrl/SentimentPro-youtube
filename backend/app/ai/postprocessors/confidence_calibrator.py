@@ -117,11 +117,19 @@ def resolve_sentiment_decision(
         sentiment, score = "neutral", _REQUEST_ANTICIPATION_CONFIDENCE
         correction = "request_anticipation_neutral"
 
-    elif bundle.opinion_polarity is None and bundle.emoji_neg >= _EMOJI_ONLY_STRONG_COUNT and bundle.emoji_pos == 0:
+    elif (
+        bundle.opinion_polarity is None
+        and bundle.emoji_neg >= _EMOJI_ONLY_STRONG_COUNT
+        and bundle.emoji_pos == 0
+    ):
         sentiment, score = "negative", _EMOJI_ONLY_CONFIDENCE
         correction = "emoji_only_negative"
 
-    elif bundle.opinion_polarity is None and bundle.emoji_pos >= _EMOJI_ONLY_STRONG_COUNT and bundle.emoji_neg == 0:
+    elif (
+        bundle.opinion_polarity is None
+        and bundle.emoji_pos >= _EMOJI_ONLY_STRONG_COUNT
+        and bundle.emoji_neg == 0
+    ):
         sentiment, score = "positive", _EMOJI_ONLY_CONFIDENCE
         correction = "emoji_only_positive"
 

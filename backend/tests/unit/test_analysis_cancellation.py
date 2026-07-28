@@ -35,7 +35,9 @@ def test_cancellation_wakes_a_waiter_on_a_different_thread_promptly():
         svc._cancellation_loops.pop(job_id, None)
 
     assert result.get("elapsed") is not None, "cancel_event.wait() never woke up (cross-thread bug regressed)"
-    assert result["elapsed"] < 1.0, f"cancellation woke the waiter after {result['elapsed']:.2f}s, expected near-instant"
+    assert result["elapsed"] < 1.0, (
+        f"cancellation woke the waiter after {result['elapsed']:.2f}s, expected near-instant"
+    )
 
 
 async def test_cancellation_before_job_registers_is_still_observed():
