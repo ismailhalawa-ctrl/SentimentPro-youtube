@@ -19,13 +19,21 @@ cleanup() {
 }
 trap cleanup EXIT
 
-echo "== Building backend image =="
-docker build -t "$BACKEND_IMAGE" "$ROOT_DIR/backend"
+# In CI these images are already built by dedicated, individually-timed
+# "Build ... image" steps (see .github/workflows/ci.yml) so this script only
+# has to run/verify them. Building here too keeps the script usable standalone
+# for local smoke testing without needing to remember separate build commands.
+if ! docker image inspect "$BACKEND_IMAGE" > /dev/null 2>&1; then
+  echo "== Building backend image =="
+  docker build --progress=plain -t "$BACKEND_IMAGE" "$ROOT_DIR/backend"
+fi
 
-echo "== Building frontend image =="
-docker build -t "$FRONTEND_IMAGE" \
-  --build-arg NEXT_PUBLIC_API_URL="http://localhost:${BACKEND_PORT}" \
-  "$ROOT_DIR/frontend"
+if ! docker image inspect "$FRONTEND_IMAGE" > /dev/null 2>&1; then
+  echo "== Building frontend image =="
+  docker build --progress=plain -t "$FRONTEND_IMAGE" \
+    --build-arg NEXT_PUBLIC_API_URL="http://localhost:${BACKEND_PORT}" \
+    "$ROOT_DIR/frontend"
+fi
 
 echo "== Starting backend container =="
 docker run -d --name "$BACKEND_CONTAINER" -p "${BACKEND_PORT}:8000" \
@@ -38,29 +46,26 @@ docker run -d --name "$BACKEND_CONTAINER" -p "${BACKEND_PORT}:8000" \
   "$BACKEND_IMAGE"
 
 echo "== Waiting for backend health check =="
-backend_healthy=false
-for _ in $(seq 1 150); do
-  status_code=$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:${BACKEND_PORT}/health" || true)
-  if [ "$status_code" = "200" ]; then
-    backend_healthy=true
-    break
-  fi
-  sleep 5
-done
-
-if [ "$backend_healthy" != "true" ]; then
-  echo "Backend did not become healthy in time. Logs:"
+# curl's own retry loop instead of a hand-rolled sleep loop: bounded by
+# --retry-max-time regardless of --retry count, so this fails fast instead of
+# hanging if the backend never comes up, and each individual attempt is capped
+# by --max-time so one slow/stuck request can't eat the whole budget.
+if ! curl -sf \
+    --retry 60 --retry-delay 3 --retry-all-errors --retry-connrefused \
+    --retry-max-time 180 --max-time 5 \
+    -o /dev/null "http://localhost:${BACKEND_PORT}/health"; then
+  echo "Backend did not become healthy within 180s. Logs:"
   docker logs "$BACKEND_CONTAINER" || true
   exit 1
 fi
 
-health_body=$(curl -s "http://localhost:${BACKEND_PORT}/health")
+health_body=$(curl -sf --max-time 5 "http://localhost:${BACKEND_PORT}/health")
 echo "Backend health response: $health_body"
 echo "$health_body" | grep -q '"database":"ok"' || { echo "Database check did not report ok"; exit 1; }
 echo "$health_body" | grep -q '"models":"ok"' || { echo "Model check did not report ok"; exit 1; }
 
 echo "== Verifying security headers are present =="
-headers=$(curl -s -D - -o /dev/null "http://localhost:${BACKEND_PORT}/health")
+headers=$(curl -sf --max-time 5 -D - -o /dev/null "http://localhost:${BACKEND_PORT}/health")
 echo "$headers" | grep -qi "x-content-type-options: nosniff" || { echo "Missing X-Content-Type-Options header"; exit 1; }
 echo "$headers" | grep -qi "x-frame-options: DENY" || { echo "Missing X-Frame-Options header"; exit 1; }
 echo "$headers" | grep -qi "x-request-id:" || { echo "Missing X-Request-ID header"; exit 1; }
@@ -69,23 +74,17 @@ echo "== Starting frontend container =="
 docker run -d --name "$FRONTEND_CONTAINER" -p "${FRONTEND_PORT}:3000" "$FRONTEND_IMAGE"
 
 echo "== Waiting for frontend to respond =="
-frontend_healthy=false
-for _ in $(seq 1 30); do
-  status_code=$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:${FRONTEND_PORT}/login" || true)
-  if [ "$status_code" = "200" ]; then
-    frontend_healthy=true
-    break
-  fi
-  sleep 3
-done
-
-if [ "$frontend_healthy" != "true" ]; then
-  echo "Frontend did not become healthy in time. Logs:"
+if ! curl -sf \
+    --retry 20 --retry-delay 3 --retry-all-errors --retry-connrefused \
+    --retry-max-time 60 --max-time 5 \
+    -o /dev/null "http://localhost:${FRONTEND_PORT}/login"; then
+  echo "Frontend did not become healthy within 60s. Logs:"
   docker logs "$FRONTEND_CONTAINER" || true
   exit 1
 fi
 
 echo "== Verifying frontend container's own HEALTHCHECK reports healthy =="
+health_status="unknown"
 for _ in $(seq 1 20); do
   health_status=$(docker inspect --format='{{.State.Health.Status}}' "$FRONTEND_CONTAINER" 2>/dev/null || echo "unknown")
   if [ "$health_status" = "healthy" ]; then

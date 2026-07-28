@@ -316,6 +316,7 @@ jobs:
     name: Docker build + smoke test
     runs-on: ubuntu-22.04
     needs: [backend-lint, backend-typecheck, frontend-lint, frontend-typecheck]
+    timeout-minutes: 30
     services:
       sqlserver:
         image: mcr.microsoft.com/mssql/server:2022-latest
@@ -333,7 +334,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: docker/setup-buildx-action@v3
+
+      - name: Build backend Docker image
+        timeout-minutes: 10
+        run: docker build --progress=plain -t sentiment-backend-smoketest backend
+
+      - name: Build frontend Docker image
+        timeout-minutes: 10
+        run: |
+          docker build --progress=plain -t sentiment-frontend-smoketest \
+            --build-arg NEXT_PUBLIC_API_URL=http://localhost:18000 \
+            frontend
+
       - name: Run Docker smoke test
+        timeout-minutes: 8
         run: bash scripts/docker-smoke-test.sh
         env:
           # Same %40-encoding fix as the backend-tests job's database_url — see the comment there.
