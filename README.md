@@ -1,46 +1,114 @@
-# SentimentPRO
+# 🎯 SentimentPRO — YouTube Comment Sentiment Analyzer
 
-AI-powered YouTube comment sentiment analysis platform. Paste a video URL and get a sentiment breakdown, spam/sarcasm/language detection, AI-generated executive summaries, audience personas, complaint/suggestion mining, FAQs, topic clusters, an "audience health" score, and a RAG-based chat assistant for asking free-form questions about that video's comments.
+**AI-powered platform for analyzing YouTube comments using NLP and Transformer models.**
 
-[![CI](https://github.com/ismailhalawa-ctrl/SentimentPRO---YouTube-Analytics/actions/workflows/ci.yml/badge.svg)](https://github.com/ismailhalawa-ctrl/SentimentPRO---YouTube-Analytics/actions/workflows/ci.yml)
+SentimentPRO helps content creators understand their audience without reading thousands of comments manually. Paste a video URL and get a full sentiment breakdown, spam/sarcasm/language detection, AI-generated executive summaries, audience personas, complaint/suggestion mining, FAQs, topic clusters, an "audience health" score, and a RAG-based chat assistant to ask free-form questions about that video's comments — all through an interactive dashboard.
 
-## Features
+[![CI](https://github.com/ismailhalawa-ctrl/SentimentPro-youtube/actions/workflows/ci.yml/badge.svg)](https://github.com/ismailhalawa-ctrl/SentimentPro-youtube/actions/workflows/ci.yml)
+[![License](https://img.shields.io/badge/license-All%20Rights%20Reserved-lightgrey.svg)](LICENSE)
 
-- **Per-comment analysis** — sentiment (positive/neutral/negative), spam flag, sarcasm flag, language detection (Arabic/English/mixed).
-- **Dashboards** — sentiment distribution, language distribution, likes-vs-sentiment scatter, sentiment timeline, keyword panel, top comments, paginated comment explorer.
-- **Exports** — CSV, Excel, and PDF reports.
-- **AI insights** (on-demand, cached, degrade gracefully without an API key) — executive summary, audience personas/segments, complaint extraction, suggestion extraction, FAQ generation, topic clustering, and a deterministic + LLM-narrated audience intelligence score.
-- **RAG chat assistant** — vector-search-grounded Q&A over a specific video's comments, with citations back to the source comments.
-- **Auth** — email/password and Google OAuth, JWT session cookies, password reset.
-- **Analysis history** — per-user job history with delete/clear.
+---
 
-## Tech Stack
+## 📸 Preview
 
-**Backend** — FastAPI, SQLAlchemy 2.0, SQL Server (via pyodbc), Alembic migrations, Pydantic v2, JWT auth (python-jose/passlib), slowapi rate limiting (Redis-backed), PyTorch + Transformers.
+<!-- Add screenshots to a docs/screenshots/ folder and update the paths below. -->
 
-**Frontend** — Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS v4, Recharts, Framer Motion.
+### 🏠 Landing Page
+![Landing Page](docs/screenshots/landing.png)
+*(add screenshot here)*
 
-**AI / ML** — Local sentiment models: MARBERT (Arabic) and RoBERTa (English), optionally ONNX-quantized. Optional LLM providers: OpenAI and Gemini. Embeddings via local `sentence-transformers` (default) or OpenAI embeddings (opt-in). Vector store: Chroma (default), with optional Qdrant/Pinecone backends.
+### 📊 Analytics Dashboard
+![Dashboard](docs/screenshots/dashboard.png)
+*(add screenshot here)*
 
-## Analysis Modes
+### 💬 Comment Explorer
+![Comment Explorer](docs/screenshots/comments.png)
+*(add screenshot here)*
+
+### 🤖 AI Assistant (RAG Chat)
+![AI Assistant](docs/screenshots/assistant.png)
+*(add screenshot here)*
+
+---
+
+## ✨ Features
+
+### 🤖 Sentiment Analysis
+- Arabic sentiment analysis using **MARBERT**
+- English sentiment analysis using **RoBERTa**
+- Mixed-language support with per-comment language detection
+- Confidence scoring on every result
+- Emoji-aware sentiment adjustments
+
+### 🌍 Language Detection
+- Arabic, English, mixed Arabic/English, and other languages
+
+### 🚨 Spam Detection
+- Promotional comments, suspicious links, phone numbers, WhatsApp spam, and repeated/boilerplate content
+
+### 😏 Sarcasm Detection
+- Emoji-based and rule-based sarcasm recognition, contradiction/contrast detection
+
+### 📊 Interactive Dashboard
+- Sentiment distribution, language distribution, sentiment timeline, likes-vs-sentiment scatter, keyword panel, top comments, paginated comment explorer with filters
+
+### 🧠 AI-Powered Insights
+*(on-demand, cached, degrades gracefully without an API key — never a hard failure)*
+- Executive summaries
+- Audience personas / segments
+- Complaint extraction
+- Suggestion & feature-request extraction
+- FAQ generation
+- Topic clustering
+- Deterministic + LLM-narrated **Audience Intelligence score**
+
+### 💬 RAG Chat Assistant
+- Ask free-form questions about a video's comments; answers are grounded in vector search over the actual comments, with citations back to the source
+
+### 📄 Export Reports
+- CSV, Excel, and PDF
+
+### 🔐 Authentication
+- Email/password and Google OAuth, JWT session cookies, password reset
+
+### 📚 Analysis History
+- Per-user history of past analyses, backed by SQL Server
+
+### ⚡ Three Analysis Modes
 
 | Mode | How it works | Requires an API key? |
 |---|---|---|
-| **FAST** | Local models only, batched | No |
-| **SMART** | Every comment sent to the configured LLM | Yes |
+| **FAST** | Local models only (MARBERT/RoBERTa), batched, optionally ONNX-quantized | No |
+| **SMART** | Every (deduplicated) comment sent to the configured LLM | Yes |
 | **HYBRID** | FAST result first, escalates uncertain/ambiguous comments to the LLM | Optional (falls back to FAST) |
 
-## Getting Started
+---
 
-### Prerequisites
+## 🛠️ Technologies Used
 
-- A running SQL Server instance (local, Azure SQL, or another managed instance).
-- Docker and Docker Compose (recommended), or Python 3.13+ and Node 22+ for a manual setup.
+**Backend** — Python, FastAPI, SQLAlchemy 2.0, SQL Server (pyodbc), Alembic, Pydantic v2, python-jose / passlib (JWT auth), slowapi (Redis-backed rate limiting)
 
-### Quick start (Docker Compose)
+**AI / ML** — PyTorch, Hugging Face Transformers, MARBERT (Arabic), RoBERTa (English), optional ONNX Runtime, OpenAI & Gemini (optional LLM providers), `sentence-transformers` (embeddings), ChromaDB (vector store, with optional Qdrant/Pinecone)
+
+**Frontend** — Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS v4, Recharts, Framer Motion
+
+**Infra** — Docker, Docker Compose, Redis, GitHub Actions CI/CD
+
+---
+
+## 🚀 Installation
+
+### Clone the repository
 
 ```bash
-cp backend/.env.example backend/.env   # fill in DATABASE_URL, JWT_SECRET_KEY, etc.
+git clone https://github.com/ismailhalawa-ctrl/SentimentPro-youtube.git
+cd SentimentPro-youtube
+```
+
+### Quick start (Docker Compose — recommended)
+
+```bash
+cp backend/.env.example backend/.env   # fill in DATABASE_URL, JWT_SECRET_KEY, YOUTUBE_API_KEY, etc.
 docker compose up --build
 ```
 
@@ -51,9 +119,9 @@ This builds and runs Redis, the backend (`:8000`), and the frontend (`:3000`). D
 ```bash
 # Backend
 cd backend
-python -m venv venv && source venv/bin/activate  # or venv\Scripts\activate on Windows
+python -m venv venv && source venv/bin/activate   # venv\Scripts\activate on Windows
 pip install -r requirements.txt
-cp .env.example .env   # fill in required values
+cp .env.example .env                              # fill in required values
 alembic upgrade head
 uvicorn app.main:app --reload
 
@@ -64,7 +132,47 @@ cp .env.local.example .env.local
 npm run dev
 ```
 
-## Testing
+### Environment variables
+
+At minimum, `backend/.env` needs a real `DATABASE_URL`, a strong `JWT_SECRET_KEY`, and a `YOUTUBE_API_KEY` (YouTube Data API v3, from Google Cloud Console). `OPENAI_API_KEY` / `GEMINI_API_KEY` are optional — without them the app runs fully in FAST mode. See `backend/.env.example` for the complete, documented list.
+
+---
+
+## 🗄️ Database Setup
+
+The app uses **SQL Server**, managed entirely through **SQLAlchemy models + Alembic migrations** — no manual schema setup needed.
+
+```bash
+# 1. Create an empty database
+CREATE DATABASE SentimentPRO;
+
+# 2. Point DATABASE_URL at it in backend/.env, then apply all migrations
+cd backend
+alembic upgrade head
+```
+
+This creates the full schema (users, analysis jobs, comment analyses/results, job insights, embedding indexes, chat sessions/messages, etc.) in one step. See `backend/alembic/versions/` for the full migration history.
+
+---
+
+## 📁 Project Structure
+
+```
+.
+├── backend/            FastAPI app (app/ai, app/api, app/models, app/services, tests/, alembic/)
+├── frontend/            Next.js app (app/, components/, features/, lib/)
+├── scripts/             Docker smoke test, production-readiness check
+├── .github/workflows/   CI pipeline (lint, type-check, security scan, tests, docker build)
+├── docker-compose.yml
+├── DEPLOYMENT.md
+└── README.md
+```
+
+See [DEPLOYMENT.md](DEPLOYMENT.md) for architecture notes, scaling considerations, and health checks.
+
+---
+
+## 🧪 Testing
 
 ```bash
 # Backend
@@ -74,8 +182,42 @@ cd backend && pytest tests/ -v --cov=app
 cd frontend && npm run test:coverage
 ```
 
-CI runs lint (ruff/eslint), type checks (mypy/tsc), security scans (gitleaks, bandit, pip-audit, npm audit), the full test suite, and a Docker build + smoke test on every push — see [`.github/workflows/ci.yml`](.github/workflows/ci.yml).
+CI runs lint (ruff/eslint), type checks (mypy/tsc), security scans (gitleaks, bandit, pip-audit, npm audit), the full test suite, and a Docker build + smoke test on every push.
 
-## License
+---
 
-All rights reserved — see [LICENSE](LICENSE).
+## 🚀 Roadmap
+
+- 📧 Real email delivery for password reset (currently logged server-side only)
+- 📈 Horizontally-scalable job cancellation (currently in-memory, single-process)
+- 🔑 Per-user LLM cost/quota controls
+- 🌐 Additional embedding/vector-store and LLM provider options
+
+---
+
+## 📄 License
+
+All rights reserved — see [LICENSE](LICENSE). This source code is made available for viewing purposes only; no permission is granted to copy, modify, or distribute it without prior written consent.
+
+---
+
+## 👤 Author
+
+**Ismaeel Halawa**
+<!-- Add your name, title, portfolio site, LinkedIn, etc. here -->
+
+- GitHub: [@ismailhalawa-ctrl](https://github.com/ismailhalawa-ctrl)
+<!-- - LinkedIn: -->
+<!-- - Email:    -->
+<!-- - Portfolio: -->
+
+---
+
+## ⭐ Project Highlights
+
+- AI-powered sentiment analysis with Arabic and English support
+- Spam and sarcasm detection
+- LLM-generated audience insights and a RAG chat assistant
+- Interactive analytics dashboard with CSV/Excel/PDF export
+- Full CI/CD: linting, type checks, security scans, tests, and Docker build on every push
+- Production-oriented architecture with authentication, rate limiting, and database migrations
