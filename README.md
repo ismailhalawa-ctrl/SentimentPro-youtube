@@ -13,7 +13,7 @@ SentimentPRO helps content creators understand their audience without reading th
 <!-- Add screenshots to a docs/screenshots/ folder and update the paths below. -->
 
 ### 🏠 Landing Page
-![Landing page](docs/screens/landing.png)
+![Home Screen](screenshots/landing.png)
 
 ### 📊 Analytics Dashboard
 ![Dashboard](docs/screenshots/dashboard.png)
