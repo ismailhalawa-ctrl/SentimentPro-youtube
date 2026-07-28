@@ -189,6 +189,12 @@ CI runs lint (ruff/eslint), type checks (mypy/tsc), security scans (gitleaks, ba
 
 ---
 
+## 🕰️ Previous Version
+
+SentimentPRO started out as a simpler Streamlit-based prototype (Python, Streamlit, SQL Server) with core sentiment/spam/sarcasm detection using MARBERT and RoBERTa, before being rebuilt from the ground up into the full FastAPI + Next.js platform described above. The original prototype is preserved here for reference: **[YouTube-Sentiment-Analyzer (legacy)](https://github.com/ismailhalawa-ctrl/YouTube-Sentiment-Analyzer)**.
+
+---
+
 ## 📄 License
 
 Released under the [MIT License](LICENSE) — free to use, modify, and distribute, with attribution.
